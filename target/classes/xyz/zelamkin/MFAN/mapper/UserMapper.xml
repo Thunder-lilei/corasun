@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xyz.zelamkin.MFAN.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="xyz.zelamkin.MFAN.pojo.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dept_id" property="dept_id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="CHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="bank_account" property="bank_account" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="mail" property="mail" jdbcType="CHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="DATE" />
+    <result column="update_time" property="update_time" jdbcType="DATE" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="xyz.zelamkin.MFAN.pojo.User" extends="BaseResultMap" >
+    <result column="image" property="image" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dept_id, username, password, sex, bank_account, birthday, mail, tel, address, 
+    create_time, update_time, role, status, remark
+  </sql>
+  <sql id="Blob_Column_List" >
+    image
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllUserWithStatus" parameterType="xyz.zelamkin.MFAN.pojo.User" resultType="xyz.zelamkin.MFAN.pojo.User">
+  SELECT * FROM USER
+  where status = 1
+  </select>
+  <select id="SelectOneWithStatus" parameterType="xyz.zelamkin.MFAN.pojo.User" resultType="xyz.zelamkin.MFAN.pojo.User">
+  select * from user 
+  where username = #{username,jdbcType=CHAR} and password =#{password,jdbcType=VARCHAR}
+  and status = 1
+  </select>
+  <select id="SelectByNameWithStatus" parameterType="xyz.zelamkin.MFAN.pojo.User" resultType="xyz.zelamkin.MFAN.pojo.User">
+  select * from user 
+  where username = #{username,jdbcType=CHAR}
+  and status = 1
+  </select>
+    <select id="SelectByTelWithStatus" parameterType="xyz.zelamkin.MFAN.pojo.User" resultType="xyz.zelamkin.MFAN.pojo.User">
+  select * from user 
+  where tel = #{tel,jdbcType=VARCHAR}
+  and status = 1
+  </select>
+  <select id="selectByPrimaryKeyWithStatus" parameterType="xyz.zelamkin.MFAN.pojo.User" resultType="xyz.zelamkin.MFAN.pojo.User">
+  select * from user 
+  where id = #{id,jdbcType=INTEGER}
+  and status = 1
+  </select>
+  <select id="SelectByMailWithStatus" parameterType="xyz.zelamkin.MFAN.pojo.User" resultType="xyz.zelamkin.MFAN.pojo.User">
+  select * from user 
+  where mail = #{mail,jdbcType=CHAR}
+  and status = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xyz.zelamkin.MFAN.pojo.User" >
+    insert into user (id, dept_id, username, 
+      password, sex, bank_account, 
+      birthday, mail, tel, address, 
+      create_time, update_time, role, 
+      status, remark, image
+      )
+    values (#{id,jdbcType=INTEGER}, #{dept_id,jdbcType=INTEGER}, #{username,jdbcType=CHAR}, 
+      #{password,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{bank_account,jdbcType=CHAR}, 
+      #{birthday,jdbcType=DATE}, #{mail,jdbcType=CHAR}, #{tel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{create_time,jdbcType=DATE}, #{update_time,jdbcType=DATE}, #{role,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{image,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.zelamkin.MFAN.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dept_id != null" >
+        dept_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="bank_account != null" >
+        bank_account,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dept_id != null" >
+        #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="bank_account != null" >
+        #{bank_account,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=CHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=DATE},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=DATE},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.zelamkin.MFAN.pojo.User" >
+    update user
+    <set >
+      <if test="dept_id != null" >
+        dept_id = #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="bank_account != null" >
+        bank_account = #{bank_account,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=CHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=DATE},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=DATE},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="xyz.zelamkin.MFAN.pojo.User" >
+    update user
+    set dept_id = #{dept_id,jdbcType=INTEGER},
+      username = #{username,jdbcType=CHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      bank_account = #{bank_account,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      mail = #{mail,jdbcType=CHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=DATE},
+      update_time = #{update_time,jdbcType=DATE},
+      role = #{role,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      image = #{image,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.zelamkin.MFAN.pojo.User" >
+    update user
+    set dept_id = #{dept_id,jdbcType=INTEGER},
+      username = #{username,jdbcType=CHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      bank_account = #{bank_account,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      mail = #{mail,jdbcType=CHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=DATE},
+      update_time = #{update_time,jdbcType=DATE},
+      role = #{role,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

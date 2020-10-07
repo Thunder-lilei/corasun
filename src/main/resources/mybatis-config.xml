@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTDSQL Map Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 引入外部资源配置文件 -->
+	<properties resource="jdbc.properties" />
+
+
+	<!-- 批量配置别名 ：指定批量定义别名的类包，别名为类名（首字母大小写都可） -->
+	<typeAliases>
+		<package name="xyz.zelamkin.FAN.pojo" />
+	</typeAliases>
+
+
+	<!--environments 配置环境，制定数据库连接信息 数据源的配置 可以配置多个数据源 通过default属性来指定当前项目用的哪个数据源 -->
+	<environments default="development">
+		<!-- environment 用于配置一个单独的数据源 id定义数据源名称 方便项目指定数据源 -->
+		<environment id="development">
+
+			<!-- transactionManager 用于配置事务管理 默认是使用JDBC事务管理 -->
+			<transactionManager type="JDBC" />
+			<!--
+				dataSource 具体数据源的链接信息
+				type  数据库连接池
+			 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<!-- Mapper扫描包，必须同目录同名称下 mapper的配置文件 -->
+		<package name="xyz.zelamkin.MFAN.mapper" />
+	</mappers>
+</configuration>

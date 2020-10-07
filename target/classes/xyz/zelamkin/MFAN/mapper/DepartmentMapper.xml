@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xyz.zelamkin.MFAN.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="xyz.zelamkin.MFAN.pojo.Department" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dept_name" property="dept_name" jdbcType="CHAR" />
+    <result column="dept_info" property="dept_info" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dept_name, dept_info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from department
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllDepartment" parameterType="xyz.zelamkin.MFAN.pojo.Department" resultType="xyz.zelamkin.MFAN.pojo.Department">
+  SELECT * FROM department
+  </select>
+   <select id="SelectByName" parameterType="xyz.zelamkin.MFAN.pojo.Department" resultType="xyz.zelamkin.MFAN.pojo.Department">
+  select * from department 
+  where dept_name = #{dept_name,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from department
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="xyz.zelamkin.MFAN.pojo.Department" >
+    insert into department (id, dept_name, dept_info
+      )
+    values (#{id,jdbcType=INTEGER}, #{dept_name,jdbcType=CHAR}, #{dept_info,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.zelamkin.MFAN.pojo.Department" >
+    insert into department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dept_name != null" >
+        dept_name,
+      </if>
+      <if test="dept_info != null" >
+        dept_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dept_name != null" >
+        #{dept_name,jdbcType=CHAR},
+      </if>
+      <if test="dept_info != null" >
+        #{dept_info,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.zelamkin.MFAN.pojo.Department" >
+    update department
+    <set >
+      <if test="dept_name != null" >
+        dept_name = #{dept_name,jdbcType=CHAR},
+      </if>
+      <if test="dept_info != null" >
+        dept_info = #{dept_info,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.zelamkin.MFAN.pojo.Department" >
+    update department
+    set dept_name = #{dept_name,jdbcType=CHAR},
+      dept_info = #{dept_info,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
